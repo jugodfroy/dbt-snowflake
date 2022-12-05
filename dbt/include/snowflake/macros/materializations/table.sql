@@ -49,7 +49,7 @@ def materialize(session, df, target_relation):
         if isinstance(df, pandas.core.frame.DataFrame):
           # session.write_pandas does not have overwrite function
           df = session.createDataFrame(df)
-    df.write.mode("overwrite").save_as_table("{{ target_relation }}", create_temp_table={{temporary}})
+    df.write.mode("overwrite").save_as_table("{{ target_relation | replace('"', '\"') }}", create_temp_table={{temporary}})
 
 def main(session):
     dbt = dbtObj(session.table)
